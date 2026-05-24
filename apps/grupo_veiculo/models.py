@@ -5,7 +5,7 @@ class GrupoVeiculo(models.Model):
     nome = models.CharField(max_length=100)
     descricao = models.TextField(blank=True, null=True)
     capacidade_passageiros = models.IntegerField()
-    tipo_combustivel = models.CharField(max_length=50)
+    valor_base_diaria = models.DecimalField(max_digits=10, decimal_places=2)
     ativo = models.BooleanField(default=True)
 
     def __str__(self):
