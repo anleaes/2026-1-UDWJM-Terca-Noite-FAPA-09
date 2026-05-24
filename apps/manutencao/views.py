@@ -7,8 +7,8 @@ from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
-from .models import Manutencao
-from .serializers import ManutencaoSerializer
+from .models import Manutencao, Peca, PecaManutencao
+from .serializers import ManutencaoSerializer, PecaManutencaoSerializer, PecaSerializer
 from .services import abrir_manutencao, finalizar_manutencao
 
 
@@ -62,3 +62,16 @@ class ManutencaoViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(manutencao)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class PecaViewSet(viewsets.ModelViewSet):
+    queryset = Peca.objects.all().order_by('tipo_peca', 'fabricante')
+    serializer_class = PecaSerializer
+
+
+class PecaManutencaoViewSet(viewsets.ModelViewSet):
+    queryset = PecaManutencao.objects.select_related(
+        'manutencao',
+        'peca'
+    ).all()
+    serializer_class = PecaManutencaoSerializer
