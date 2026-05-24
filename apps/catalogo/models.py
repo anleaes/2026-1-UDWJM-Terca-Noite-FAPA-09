@@ -10,7 +10,7 @@ class Catalogo(models.Model):
     )
 
     preco_diaria = models.DecimalField(max_digits=10, decimal_places=2)
-    foto = models.ImageField(upload_to='catalogo_veiculos/', blank=True, null=True)
+    foto = models.URLField(max_length=500, blank=True, null=True)
     descricao_comercial = models.TextField()
     destaque = models.BooleanField(default=False)
     ativo = models.BooleanField(default=True)
