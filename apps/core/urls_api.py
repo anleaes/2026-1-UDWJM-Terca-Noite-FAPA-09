@@ -10,4 +10,5 @@ urlpatterns = [
     path('', include('locais.urls_api', namespace='locais_api')),
     path('', include('solicitacoes.urls_api', namespace='solicitacoes_api')),
     path('', include('manutencao.urls', namespace='manutencao')),
+    path('', include('alocacao.urls', namespace='alocacao')),
 ]
