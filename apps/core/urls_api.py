@@ -11,4 +11,5 @@ urlpatterns = [
     path('', include('solicitacoes.urls_api', namespace='solicitacoes_api')),
     path('', include('manutencao.urls', namespace='manutencao')),
     path('', include('alocacao.urls', namespace='alocacao')),
+    path('', include('users.urls', namespace='users')),
 ]
