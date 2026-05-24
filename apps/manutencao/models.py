@@ -27,3 +27,31 @@ class Manutencao(models.Model):
 
     def __str__(self):
         return f'{self.tipo_manutencao} - {self.veiculo}'
+
+
+class Peca(models.Model):
+    tipo_peca = models.CharField(max_length=100)
+    fabricante = models.CharField(max_length=100)
+    preco_unitario = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f'{self.tipo_peca} - {self.fabricante}'
+
+
+class PecaManutencao(models.Model):
+    manutencao = models.ForeignKey(
+        Manutencao,
+        on_delete=models.CASCADE,
+        related_name='pecas_manutencao'
+    )
+    peca = models.ForeignKey(
+        Peca,
+        on_delete=models.PROTECT,
+        related_name='usos_manutencao'
+    )
+    quantidade = models.IntegerField()
+    preco_unitario = models.DecimalField(max_digits=10, decimal_places=2)
+    sub_total = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f'{self.quantidade}x {self.peca} - {self.manutencao}'
