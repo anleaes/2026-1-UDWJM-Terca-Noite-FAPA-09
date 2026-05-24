@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'core.apps.CoreConfig',
     'users.apps.UsersConfig',
+    'grupo_veiculo.apps.GrupoVeiculoConfig',
+    'veiculo.apps.VeiculoConfig',
+    'catalogo.apps.CatalogoConfig',
 ]
 
 MIDDLEWARE = [
