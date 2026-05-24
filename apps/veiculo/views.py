@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework import viewsets
 
-# Create your views here.
+from .models import Veiculo
+from .serializers import VeiculoSerializer
+
+
+class VeiculoViewSet(viewsets.ModelViewSet):
+    queryset = Veiculo.objects.select_related('grupo').all().order_by('placa')
+    serializer_class = VeiculoSerializer
