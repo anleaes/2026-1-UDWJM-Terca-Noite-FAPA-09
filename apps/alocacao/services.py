@@ -32,6 +32,15 @@ def criar_alocacao(
     if solicitacao.status != 'aprovada':
         raise ValidationError('Apenas solicitacoes aprovadas podem gerar alocacao.')
 
+    if hasattr(solicitacao, 'alocacao'):
+        raise ValidationError('Esta solicitacao ja possui uma alocacao.')
+
+    if data_fim_prevista < data_inicio:
+        raise ValidationError('A data fim prevista nao pode ser anterior a data de inicio.')
+
+    if km_inicial < 0:
+        raise ValidationError('A quilometragem inicial nao pode ser negativa.')
+
     veiculo = solicitacao.veiculo
     if veiculo.status != 'disponivel':
         raise ValidationError('O veiculo precisa estar disponivel para ser alocado.')
@@ -91,6 +100,10 @@ def finalizar_alocacao(
     veiculo = alocacao.solicitacao.veiculo
     veiculo.status = 'disponivel'
     veiculo.save(update_fields=['status'])
+
+    solicitacao = alocacao.solicitacao
+    solicitacao.status = 'finalizada'
+    solicitacao.save(update_fields=['status'])
 
     registrar_historico_alocacao(
         alocacao=alocacao,
