@@ -1,14 +1,19 @@
 from django import forms
-from .models import Local
+
+from .models import Solicitacao
 
 
-class LocalForm(forms.ModelForm):
+class SolicitacaoForm(forms.ModelForm):
     class Meta:
-        model = Local
+        model = Solicitacao
         fields = [
-            'nome',
-            'endereco',
-            'cidade',
-            'estado',
-            'cep',
+            'cliente',
+            'veiculo',
+            'local',
+            'funcionario',
+            'data_inicio_desejada',
+            'data_fim_desejada',
+            'motivo',
+            'status',
+            'observacao',
         ]
