@@ -8,4 +8,3 @@ class LocalAdmin(admin.ModelAdmin):
     search_fields = ('nome', 'cidade', 'estado', 'cep')
     list_filter = ('estado', 'cidade')
 
-# Register your models here.

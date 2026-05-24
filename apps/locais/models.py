@@ -10,4 +10,4 @@ class Local(models.Model):
 
     def __str__(self):
         return f'{self.nome} - {self.cidade}/{self.estado}'
-# Create your models here.
+
