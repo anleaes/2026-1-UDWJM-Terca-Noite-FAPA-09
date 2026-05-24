@@ -5,4 +5,5 @@ app_name = 'api'
 
 urlpatterns = [
     path('', include('manutencao.urls', namespace='manutencao')),
+    path('', include('locais.urls', namespace='locais')),
 ]

@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('core.urls', namespace='core')),
     path('grupos/', include('grupo_veiculo.urls', namespace='grupo_veiculo')),
     path('api/', include('core.urls_api', namespace='api')),
+    path('locais/', include('locais.urls', namespace='locais')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
