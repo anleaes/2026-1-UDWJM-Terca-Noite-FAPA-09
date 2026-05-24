@@ -10,6 +10,15 @@ class Veiculo(models.Model):
         ('inativo', 'Inativo'),
     ]
 
+    TIPO_COMBUSTIVEL_CHOICES = [
+        ('gasolina', 'Gasolina'),
+        ('etanol', 'Etanol'),
+        ('flex', 'Flex'),
+        ('diesel', 'Diesel'),
+        ('eletrico', 'Elétrico'),
+        ('hibrido', 'Híbrido'),
+    ]
+
     grupo = models.ForeignKey(
         GrupoVeiculo,
         on_delete=models.PROTECT,
@@ -24,6 +33,10 @@ class Veiculo(models.Model):
     ano_modelo = models.IntegerField()
     cor = models.CharField(max_length=50)
     quilometragem = models.FloatField()
+    tipo_combustivel = models.CharField(
+        max_length=20,
+        choices=TIPO_COMBUSTIVEL_CHOICES
+    )
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
