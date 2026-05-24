@@ -2,6 +2,29 @@ System check identified some issues:
 
 WARNINGS:
 ?: (staticfiles.W004) The directory 'C:\Users\bielb\OneDrive\Documentos\GitHub\2026-1-UDWMJ-Terca-Noite-FAPA-09\staticfiles' in the STATICFILES_DIRS setting does not exist.
+Operations to perform:
+  Apply all migrations: admin, alocacao, auth, catalogo, contenttypes, grupo_veiculo, locais, manutencao, sessions, solicitacoes, users, veiculo
+Running migrations:
+  Applying contenttypes.0001_initial...Traceback (most recent call last):
+  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\db\backends\utils.py", line 103, in _execute
+    return self.cursor.execute(sql)
+           ~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\db\backends\oracle\base.py", line 628, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\oracledb\cursor.py", line 859, in execute
+    impl.execute(self)
+    ~~~~~~~~~~~~^^^^^^
+  File "src/oracledb/impl/thin/cursor.pyx", line 279, in oracledb.thin_impl.ThinCursorImpl.execute
+  File "src/oracledb/impl/thin/protocol.pyx", line 501, in oracledb.thin_impl.Protocol._process_single_message
+  File "src/oracledb/impl/thin/protocol.pyx", line 502, in oracledb.thin_impl.Protocol._process_single_message
+  File "src/oracledb/impl/thin/protocol.pyx", line 494, in oracledb.thin_impl.Protocol._process_message
+  File "src/oracledb/impl/thin/messages/base.pyx", line 102, in oracledb.thin_impl.Message._check_and_raise_exception
+oracledb.exceptions.DatabaseError: ORA-00955: name is already used by an existing object
+Help: https://docs.oracle.com/error-help/db/ora-00955/
+
+The above exception was the direct cause of the following exception:
+
 Traceback (most recent call last):
   File "C:\Users\bielb\OneDrive\Documentos\GitHub\2026-1-UDWMJ-Terca-Noite-FAPA-09\manage.py", line 22, in <module>
     main()
@@ -22,17 +45,68 @@ Traceback (most recent call last):
     output = self.handle(*args, **options)
   File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\core\management\base.py", line 111, in wrapper
     res = handle_func(*args, **kwargs)
-  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\core\management\commands\makemigrations.py", line 140, in handle
-    loader = MigrationLoader(None, ignore_no_migrations=True)
-  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\db\migrations\loader.py", line 59, in __init__
-    self.build_graph()
-    ~~~~~~~~~~~~~~~~^^
-  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\db\migrations\loader.py", line 313, in build_graph
-    self.graph.validate_consistency()
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
-  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\db\migrations\graph.py", line 199, in validate_consistency
-    [n.raise_error() for n in self.node_map.values() if isinstance(n, DummyNode)]
-     ~~~~~~~~~~~~~^^
-  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\db\migrations\graph.py", line 60, in raise_error
-    raise NodeNotFoundError(self.error_message, self.key, origin=self.origin)
-django.db.migrations.exceptions.NodeNotFoundError: Migration veiculo.0001_initial dependencies reference nonexistent parent node ('grupo_veiculo', '0001_initial')
+  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\core\management\commands\migrate.py", line 354, in handle
+    post_migrate_state = executor.migrate(
+        targets,
+    ...<3 lines>...
+        fake_initial=fake_initial,
+    )
+  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\db\migrations\executor.py", line 137, in migrate
+    state = self._migrate_all_forwards(
+        state, plan, full_plan, fake=fake, fake_initial=fake_initial
+    )
+  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\db\migrations\executor.py", line 169, in _migrate_all_forwards
+    state = self.apply_migration(
+        state, migration, fake=fake, fake_initial=fake_initial
+    )
+  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\db\migrations\executor.py", line 257, in apply_migration
+    state = migration.apply(state, schema_editor)
+  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\db\migrations\migration.py", line 132, in apply
+    operation.database_forwards(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self.app_label, schema_editor, old_state, project_state
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\db\migrations\operations\models.py", line 100, in database_forwards
+    schema_editor.create_model(model)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\db\backends\base\schema.py", line 513, in create_model
+    self.execute(sql, params or None)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\db\backends\base\schema.py", line 205, in execute
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\db\utils.py", line 94, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\db\backends\utils.py", line 103, in _execute
+    return self.cursor.execute(sql)
+           ~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\django\db\backends\oracle\base.py", line 628, in execute
+    return self.cursor.execute(query, self._param_generator(params))
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\bielb\miniconda3\envs\A3\Lib\site-packages\oracledb\cursor.py", line 859, in execute
+    impl.execute(self)
+    ~~~~~~~~~~~~^^^^^^
+  File "src/oracledb/impl/thin/cursor.pyx", line 279, in oracledb.thin_impl.ThinCursorImpl.execute
+  File "src/oracledb/impl/thin/protocol.pyx", line 501, in oracledb.thin_impl.Protocol._process_single_message
+  File "src/oracledb/impl/thin/protocol.pyx", line 502, in oracledb.thin_impl.Protocol._process_single_message
+  File "src/oracledb/impl/thin/protocol.pyx", line 494, in oracledb.thin_impl.Protocol._process_message
+  File "src/oracledb/impl/thin/messages/base.pyx", line 102, in oracledb.thin_impl.Message._check_and_raise_exception
+django.db.utils.DatabaseError: ORA-00955: name is already used by an existing object
+Help: https://docs.oracle.com/error-help/db/ora-00955/
