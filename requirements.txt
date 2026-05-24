@@ -1,0 +1,15 @@
+asgiref @ file:///C:/Users/task_177184284708708/croot/asgiref_1771842961106/work
+cffi==2.0.0
+cryptography==48.0.0
+Django @ file:///C:/Users/task_177669022970618/croot/django_1776690354212/work
+django-filter==25.2
+django-widget-tweaks==1.5.1
+djangorestframework==3.17.1
+Markdown==3.10.2
+oracledb==4.0.1
+pillow @ file:///C:/Users/task_177797437436638/croot/pillow_1777974476826/work
+pycparser==3.0
+python-decouple==3.8
+sqlparse @ file:///C:/miniconda3/conda-bld/sqlparse_1764240087577/work
+typing_extensions==4.15.0
+tzdata==2026.2
