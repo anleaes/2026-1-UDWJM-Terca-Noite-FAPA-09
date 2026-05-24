@@ -1,7 +1,8 @@
-from django.urls import path
+from django.urls import include, path
+
 
 app_name = 'api'
 
 urlpatterns = [
-    # As rotas da API serão adicionadas aqui conforme criamos os ViewSets
+    path('', include('manutencao.urls', namespace='manutencao')),
 ]
