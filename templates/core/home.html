@@ -1,12 +1,43 @@
 {% extends 'base.html' %}
 
-{% block title %}
-    {{ block.super }}
-{% endblock title %}
+{% block title %}Locadora - Menu Principal{% endblock title %}
 
 {% block body %}
 
-<!-- Codigo html especifico desse arquivo -->
- <h1>Teste</h1>
+<h1>Sistema de Locacao de Veiculos</h1>
+<p>Selecione uma das funcionalidades abaixo:</p>
+
+<h2>Alocacao</h2>
+<ul>
+    <li><a href="/api/alocacoes/">Alocacoes (criar / finalizar / cancelar)</a></li>
+    <li><a href="/api/historicos-alocacao/">Historico de Alocacoes</a></li>
+    <li><a href="/api/solicitacoes/">Solicitacoes</a></li>
+</ul>
+
+<h2>Frota</h2>
+<ul>
+    <li><a href="/api/veiculos/">Veiculos</a></li>
+    <li><a href="/api/grupos/">Grupos de Veiculos</a></li>
+    <li><a href="/api/catalogo/">Catalogo</a></li>
+</ul>
+
+<h2>Operacao</h2>
+<ul>
+    <li><a href="/api/locais/">Locais</a></li>
+    <li><a href="/api/manutencoes/">Manutencoes</a></li>
+    <li><a href="/api/pecas/">Pecas</a></li>
+    <li><a href="/api/pecas-manutencao/">Pecas por Manutencao</a></li>
+</ul>
+
+<h2>Pessoas</h2>
+<ul>
+    <li><a href="/api/clientes/">Clientes</a></li>
+    <li><a href="/api/funcionarios/">Funcionarios</a></li>
+</ul>
+
+<h2>Administracao</h2>
+<ul>
+    <li><a href="/admin/">Admin Django</a></li>
+</ul>
 
 {% endblock body %}
