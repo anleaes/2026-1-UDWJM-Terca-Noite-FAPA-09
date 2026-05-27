@@ -84,11 +84,11 @@ class HistoricoAlocacaoViewSet(viewsets.ModelViewSet):
     queryset = HistoricoAlocacao.objects.select_related('alocacao').all()
     serializer_class = HistoricoAlocacaoSerializer
 
-    class AlocacaoListView(ListView):
-        model = Alocacao
+
+class AlocacaoListView(ListView):
+    model = Alocacao
     template_name = 'alocacao/lista.html'
     context_object_name = 'alocacoes'
-
 
 class AlocacaoDetailView(DetailView):
     model = Alocacao
