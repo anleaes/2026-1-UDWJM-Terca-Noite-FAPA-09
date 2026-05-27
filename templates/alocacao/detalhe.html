@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Detalhe da Alocação
+{% endblock title %}
+
+{% block body %}
+
+<h1>Alocação #{{ alocacao.id }}</h1>
+
+<p><strong>Solicitação:</strong> {{ alocacao.solicitacao }}</p>
+<p><strong>Data início:</strong> {{ alocacao.data_inicio }}</p>
+<p><strong>Data fim prevista:</strong> {{ alocacao.data_fim_prevista }}</p>
+<p><strong>Data fim real:</strong> {{ alocacao.data_fim_real }}</p>
+<p><strong>KM inicial:</strong> {{ alocacao.km_inicial }}</p>
+<p><strong>KM final:</strong> {{ alocacao.km_final }}</p>
+<p><strong>Status:</strong> {{ alocacao.status }}</p>
+<p><strong>Observação:</strong> {{ alocacao.observacao }}</p>
+
+<p>
+    <a href="{% url 'alocacao_web:editar' alocacao.pk %}">Editar</a>
+    |
+    <a href="{% url 'alocacao_web:excluir' alocacao.pk %}">Excluir</a>
+    |
+    <a href="{% url 'alocacao_web:lista' %}">Voltar</a>
+</p>
+
+{% endblock body %}
