@@ -24,6 +24,10 @@ urlpatterns = [
     path('', include('core.urls', namespace='core')),
     path('grupos/', include('grupo_veiculo.urls', namespace='grupo_veiculo')),
     path('api/', include('core.urls_api', namespace='api')),
+<<<<<<< Updated upstream
+=======
+    path('usuarios/', include('users.urls_web', namespace='users_web')),
+>>>>>>> Stashed changes
     path('locais/', include('locais.urls', namespace='locais')),
 ]
 
