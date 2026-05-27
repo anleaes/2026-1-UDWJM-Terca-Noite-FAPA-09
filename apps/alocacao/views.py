@@ -9,6 +9,10 @@ from .models import Alocacao, HistoricoAlocacao
 from .serializers import AlocacaoSerializer, HistoricoAlocacaoSerializer
 from .services import cancelar_alocacao, criar_alocacao, finalizar_alocacao
 
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from .forms import AlocacaoForm
+
 
 def _raise_api_validation_error(error):
     messages = error.messages if hasattr(error, 'messages') else [str(error)]
@@ -79,3 +83,40 @@ class AlocacaoViewSet(viewsets.ModelViewSet):
 class HistoricoAlocacaoViewSet(viewsets.ModelViewSet):
     queryset = HistoricoAlocacao.objects.select_related('alocacao').all()
     serializer_class = HistoricoAlocacaoSerializer
+
+    class AlocacaoListView(ListView):
+        model = Alocacao
+    template_name = 'alocacao/lista.html'
+    context_object_name = 'alocacoes'
+
+
+class AlocacaoDetailView(DetailView):
+    model = Alocacao
+    template_name = 'alocacao/detalhe.html'
+    context_object_name = 'alocacao'
+
+
+class AlocacaoCreateView(CreateView):
+    model = Alocacao
+    form_class = AlocacaoForm
+    template_name = 'alocacao/form.html'
+    success_url = reverse_lazy('alocacao_web:lista')
+
+
+class AlocacaoUpdateView(UpdateView):
+    model = Alocacao
+    form_class = AlocacaoForm
+    template_name = 'alocacao/form.html'
+    success_url = reverse_lazy('alocacao_web:lista')
+
+
+class AlocacaoDeleteView(DeleteView):
+    model = Alocacao
+    template_name = 'alocacao/confirmar_delete.html'
+    success_url = reverse_lazy('alocacao_web:lista')
+
+
+class HistoricoAlocacaoListView(ListView):
+    model = HistoricoAlocacao
+    template_name = 'alocacao/historicos.html'
+    context_object_name = 'historicos'
