@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Detalhe do Local
+{% endblock title %}
+
+{% block body %}
+
+<h1>{{ local.nome }}</h1>
+
+<p><strong>Endereço:</strong> {{ local.endereco }}</p>
+<p><strong>Cidade:</strong> {{ local.cidade }}</p>
+<p><strong>Estado:</strong> {{ local.estado }}</p>
+<p><strong>CEP:</strong> {{ local.cep }}</p>
+
+<p>
+    <a href="{% url 'locais:editar' local.pk %}">Editar</a>
+    |
+    <a href="{% url 'locais:excluir' local.pk %}">Excluir</a>
+    |
+    <a href="{% url 'locais:lista' %}">Voltar</a>
+</p>
+
+{% endblock body %}
