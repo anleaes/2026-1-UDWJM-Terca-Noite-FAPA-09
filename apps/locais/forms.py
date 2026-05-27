@@ -1,8 +1,14 @@
-from rest_framework import serializers
+from django import forms
 from .models import Local
 
 
-class LocalSerializer(serializers.ModelSerializer):
+class LocalForm(forms.ModelForm):
     class Meta:
         model = Local
-        fields = '__all__'
+        fields = [
+            'nome',
+            'endereco',
+            'cidade',
+            'estado',
+            'cep',
+        ]

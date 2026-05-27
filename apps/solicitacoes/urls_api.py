@@ -1,13 +1,13 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from .views import GrupoVeiculoViewSet
+from .views import SolicitacaoViewSet
 
 
-app_name = 'grupo_veiculo'
+app_name = 'solicitacoes_api'
 
 router = DefaultRouter()
-router.register('grupos', GrupoVeiculoViewSet, basename='grupo')
+router.register('solicitacoes', SolicitacaoViewSet, basename='solicitacao')
 
 urlpatterns = [
     path('', include(router.urls)),

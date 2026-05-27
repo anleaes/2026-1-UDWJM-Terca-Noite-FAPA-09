@@ -4,6 +4,12 @@ from django.urls import include, path
 app_name = 'api'
 
 urlpatterns = [
+    path('', include('grupo_veiculo.urls', namespace='grupo_veiculo')),
+    path('', include('veiculo.urls', namespace='veiculo')),
+    path('', include('catalogo.urls', namespace='catalogo')),
+    path('', include('locais.urls_api', namespace='locais_api')),
+    path('', include('solicitacoes.urls_api', namespace='solicitacoes_api')),
     path('', include('manutencao.urls', namespace='manutencao')),
-    path('', include('locais.urls', namespace='locais')),
+    path('', include('alocacao.urls', namespace='alocacao')),
+    path('', include('users.urls', namespace='users')),
 ]
