@@ -1,27 +1,23 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Detalhe do Funcionário
+Formulário de Funcionário
 {% endblock title %}
 
 {% block body %}
 
-<h1>{{ funcionario.nome }}</h1>
+<h1>Formulário de Funcionário</h1>
 
-<p><strong>Email:</strong> {{ funcionario.email }}</p>
-<p><strong>CPF:</strong> {{ funcionario.cpf }}</p>
-<p><strong>Telefone:</strong> {{ funcionario.telefone }}</p>
-<p><strong>Status:</strong> {{ funcionario.status }}</p>
-<p><strong>Cargo:</strong> {{ funcionario.cargo }}</p>
-<p><strong>Nível de acesso:</strong> {{ funcionario.nivel_acesso }}</p>
-<p><strong>Ativo:</strong> {{ funcionario.ativo }}</p>
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Salvar</button>
+</form>
 
 <p>
-    <a href="{% url 'users_web:funcionarios_editar' funcionario.pk %}">Editar</a>
-    |
-    <a href="{% url 'users_web:funcionarios_excluir' funcionario.pk %}">Excluir</a>
-    |
-    <a href="{% url 'users_web:funcionarios_lista' %}">Voltar</a>
+    <a href="{% url 'users_web:funcionarios_lista' %}">Voltar para listagem</a>
 </p>
 
 {% endblock body %}
