@@ -1,51 +1,24 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Locais
+Detalhe do Local
 {% endblock title %}
 
 {% block body %}
 
-<h1>Locais de Retirada e Devolução</h1>
+<h1>{{ local.nome }}</h1>
+
+<p><strong>Endereço:</strong> {{ local.endereco }}</p>
+<p><strong>Cidade:</strong> {{ local.cidade }}</p>
+<p><strong>Estado:</strong> {{ local.estado }}</p>
+<p><strong>CEP:</strong> {{ local.cep }}</p>
 
 <p>
-    <a href="{% url 'locais:criar' %}">Cadastrar novo local</a>
+    <a href="{% url 'locais:editar' local.pk %}">Editar</a>
+    |
+    <a href="{% url 'locais:deletar' local.pk %}">Deletar</a>
+    |
+    <a href="{% url 'locais:listar' %}">Voltar para listagem</a>
 </p>
-
-<table border="1">
-    <thead>
-        <tr>
-            <th>Nome</th>
-            <th>Endereço</th>
-            <th>Cidade</th>
-            <th>Estado</th>
-            <th>CEP</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        {% for local in locais %}
-            <tr>
-                <td>{{ local.nome }}</td>
-                <td>{{ local.endereco }}</td>
-                <td>{{ local.cidade }}</td>
-                <td>{{ local.estado }}</td>
-                <td>{{ local.cep }}</td>
-                <td>
-                    <a href="{% url 'locais:detalhe' local.pk %}">Ver</a>
-                    |
-                    <a href="{% url 'locais:editar' local.pk %}">Editar</a>
-                    |
-                    <a href="{% url 'locais:excluir' local.pk %}">Excluir</a>
-                </td>
-            </tr>
-        {% empty %}
-            <tr>
-                <td colspan="6">Nenhum local cadastrado.</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
 
 {% endblock body %}
