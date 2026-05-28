@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Formulário de Funcionário
+Formulário de Alocação
 {% endblock title %}
 
 {% block body %}
 
-<h1>Formulário de Funcionário</h1>
+<h1>Formulário de Alocação</h1>
 
 <form method="post">
     {% csrf_token %}
@@ -17,7 +17,7 @@ Formulário de Funcionário
 </form>
 
 <p>
-    <a href="{% url 'users_web:funcionarios_listar' %}">Voltar para listagem</a>
+    <a href="{% url 'alocacao_web:lista' %}">Voltar</a>
 </p>
 
 {% endblock body %}

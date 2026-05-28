@@ -1,24 +1,23 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Detalhe do Local
+Formulário de Local
 {% endblock title %}
 
 {% block body %}
 
-<h1>{{ local.nome }}</h1>
+<h1>Formulário de Local</h1>
 
-<p><strong>Endereço:</strong> {{ local.endereco }}</p>
-<p><strong>Cidade:</strong> {{ local.cidade }}</p>
-<p><strong>Estado:</strong> {{ local.estado }}</p>
-<p><strong>CEP:</strong> {{ local.cep }}</p>
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Salvar</button>
+</form>
 
 <p>
-    <a href="{% url 'locais:editar' local.pk %}">Editar</a>
-    |
-    <a href="{% url 'locais:excluir' local.pk %}">Excluir</a>
-    |
-    <a href="{% url 'locais:lista' %}">Voltar</a>
+    <a href="{% url 'locais:lista' %}">Voltar para listagem</a>
 </p>
 
 {% endblock body %}
