@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Histórico de Alocações
+{% endblock title %}
+
+{% block body %}
+
+<h1>Histórico de Alocações</h1>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Alocação</th>
+            <th>Data registro</th>
+            <th>Status anterior</th>
+            <th>Status novo</th>
+            <th>Responsável</th>
+            <th>Observação</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for historico in historicos %}
+            <tr>
+                <td>{{ historico.alocacao }}</td>
+                <td>{{ historico.data_registro }}</td>
+                <td>{{ historico.status_anterior }}</td>
+                <td>{{ historico.status_novo }}</td>
+                <td>{{ historico.responsavel_alteracao }}</td>
+                <td>{{ historico.observacao }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="6">Nenhum histórico cadastrado.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p>
+    <a href="{% url 'alocacao_web:lista' %}">Voltar para alocações</a>
+</p>
+
+{% endblock body %}
