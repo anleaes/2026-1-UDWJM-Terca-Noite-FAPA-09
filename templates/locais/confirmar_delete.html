@@ -1,23 +1,22 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Formulário de Local
+Deletar Local
 {% endblock title %}
 
 {% block body %}
 
-<h1>Formulário de Local</h1>
+<h1>Deletar Local</h1>
+
+<p>Tem certeza que deseja deletar o local "{{ local.nome }}"?</p>
 
 <form method="post">
     {% csrf_token %}
-
-    {{ form.as_p }}
-
-    <button type="submit">Salvar</button>
+    <button type="submit">Confirmar exclusão</button>
 </form>
 
 <p>
-    <a href="{% url 'locais:lista' %}">Voltar</a>
+    <a href="{% url 'locais:listar' %}">Cancelar</a>
 </p>
 
 {% endblock body %}
