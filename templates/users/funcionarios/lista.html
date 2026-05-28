@@ -41,7 +41,9 @@ Funcionários
                     |
                     <a href="{% url 'users_web:funcionarios_editar' funcionario.pk %}">Editar</a>
                     |
-                    <a href="{% url 'users_web:funcionarios_excluir' funcionario.pk %}">Excluir</a>
+                    <a href="{% url 'users_web:funcionarios_deletar' funcionario.pk %}">Deletar</a>
+                    
+                    <a href="{% url 'users_web:funcionarios_criar' %}">Cadastrar novo funcionário</a>
                 </td>
             </tr>
         {% empty %}

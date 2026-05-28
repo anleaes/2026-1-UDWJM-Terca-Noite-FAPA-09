@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Deletar Funcionário
+Excluir Alocação
 {% endblock title %}
 
 {% block body %}
 
-<h1>Deletar Funcionário</h1>
+<h1>Excluir Alocação</h1>
 
-<p>Tem certeza que deseja deletar o funcionário "{{ funcionario.nome }}"?</p>
+<p>Tem certeza que deseja excluir a alocação #{{ alocacao.id }}?</p>
 
 <form method="post">
     {% csrf_token %}
@@ -16,7 +16,7 @@ Deletar Funcionário
 </form>
 
 <p>
-    <a href="{% url 'users_web:funcionarios_listar' %}">Cancelar</a>
+    <a href="{% url 'alocacao_web:lista' %}">Cancelar</a>
 </p>
 
 {% endblock body %}
