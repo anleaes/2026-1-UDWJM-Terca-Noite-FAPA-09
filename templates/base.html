@@ -206,17 +206,17 @@
                 <div class="dropdown">
                     <a href="#">Frota ▾</a>
                     <div class="dropdown-content">
-                        <a href="#">Veículos</a>
-                        <a href="#">Grupos de Veículos</a>
-                        <a href="#">Catálogo</a>
+                        <a href="{% url 'veiculo_web:lista' %}">Veículos</a>
+                        <a href="{% url 'grupo_veiculo_web:lista' %}">Grupos de Veículos</a>
+                        <a href="{% url 'catalogo_web:lista' %}">Catálogo</a>
                     </div>
                 </div>
 
                 <div class="dropdown">
                     <a href="#">Alocação ▾</a>
                     <div class="dropdown-content">
-                        <a href="#">Alocações</a>
-                        <a href="#">Histórico</a>
+                        <a href="{% url 'alocacao_web:lista' %}">Alocações</a>
+                        <a href="{% url 'alocacao_web:historicos' %}">Histórico</a>
                         <a href="#">Solicitações</a>
                     </div>
                 </div>
@@ -224,7 +224,7 @@
                 <div class="dropdown">
                     <a href="#">Operação ▾</a>
                     <div class="dropdown-content">
-                        <a href="#">Locais</a>
+                        <a href="{% url 'locais:lista' %}">Locais</a>
                         <a href="#">Manutenções</a>
                         <a href="#">Peças</a>
                     </div>
@@ -234,7 +234,7 @@
                     <a href="#">Pessoas ▾</a>
                     <div class="dropdown-content">
                         <a href="#">Clientes</a>
-                        <a href="#">Funcionários</a>
+                        <a href="{% url 'users_web:funcionarios_lista' %}">Funcionários</a>
                     </div>
                 </div>
 
