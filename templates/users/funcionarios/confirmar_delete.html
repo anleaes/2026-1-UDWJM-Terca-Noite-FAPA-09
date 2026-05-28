@@ -1,23 +1,22 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Formulário de Funcionário
+Deletar Funcionário
 {% endblock title %}
 
 {% block body %}
 
-<h1>Formulário de Funcionário</h1>
+<h1>Deletar Funcionário</h1>
+
+<p>Tem certeza que deseja deletar o funcionário "{{ funcionario.nome }}"?</p>
 
 <form method="post">
     {% csrf_token %}
-
-    {{ form.as_p }}
-
-    <button type="submit">Salvar</button>
+    <button type="submit">Confirmar exclusão</button>
 </form>
 
 <p>
-    <a href="{% url 'users_web:funcionarios_lista' %}">Voltar</a>
+    <a href="{% url 'users_web:funcionarios_listar' %}">Cancelar</a>
 </p>
 
 {% endblock body %}
