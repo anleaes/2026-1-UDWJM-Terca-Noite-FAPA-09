@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Detalhe do Grupo
+{% endblock title %}
+
+{% block body %}
+
+<h1>{{ grupo.nome }}</h1>
+
+<p><strong>Descrição:</strong> {{ grupo.descricao|default:"—" }}</p>
+<p><strong>Capacidade de passageiros:</strong> {{ grupo.capacidade_passageiros }}</p>
+<p><strong>Valor base da diária:</strong> R$ {{ grupo.valor_base_diaria }}</p>
+<p><strong>Ativo:</strong> {{ grupo.ativo }}</p>
+
+<p>
+    <a href="{% url 'grupo_veiculo_web:editar' grupo.pk %}">Editar</a>
+    |
+    <a href="{% url 'grupo_veiculo_web:deletar' grupo.pk %}">Deletar</a>
+    |
+    <a href="{% url 'grupo_veiculo_web:listar' %}">Voltar para listagem</a>
+</p>
+
+{% endblock body %}

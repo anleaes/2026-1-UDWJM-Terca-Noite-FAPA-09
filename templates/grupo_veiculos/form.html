@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Formulário de Grupo de Veículo
+{% endblock title %}
+
+{% block body %}
+
+<h1>Formulário de Grupo de Veículo</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Salvar</button>
+</form>
+
+<p>
+    <a href="{% url 'grupo_veiculo_web:listar' %}">Voltar para listagem</a>
+</p>
+
+{% endblock body %}
