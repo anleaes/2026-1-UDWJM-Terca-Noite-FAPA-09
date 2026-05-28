@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Alocações
+{% endblock title %}
+
+{% block body %}
+
+<h1>Alocações</h1>
+
+<p>
+    <a href="{% url 'alocacao_web:criar' %}">Cadastrar nova alocação</a>
+    |
+    <a href="{% url 'alocacao_web:historicos' %}">Ver históricos</a>
+</p>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Solicitação</th>
+            <th>Data início</th>
+            <th>Data fim prevista</th>
+            <th>Data fim real</th>
+            <th>KM inicial</th>
+            <th>KM final</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for alocacao in alocacoes %}
+            <tr>
+                <td>{{ alocacao.id }}</td>
+                <td>{{ alocacao.solicitacao }}</td>
+                <td>{{ alocacao.data_inicio }}</td>
+                <td>{{ alocacao.data_fim_prevista }}</td>
+                <td>{{ alocacao.data_fim_real }}</td>
+                <td>{{ alocacao.km_inicial }}</td>
+                <td>{{ alocacao.km_final }}</td>
+                <td>{{ alocacao.status }}</td>
+                <td>
+                    <a href="{% url 'alocacao_web:detalhe' alocacao.pk %}">Ver</a>
+                    |
+                    <a href="{% url 'alocacao_web:editar' alocacao.pk %}">Editar</a>
+                    |
+                    <a href="{% url 'alocacao_web:excluir' alocacao.pk %}">Excluir</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="9">Nenhuma alocação cadastrada.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock body %}
