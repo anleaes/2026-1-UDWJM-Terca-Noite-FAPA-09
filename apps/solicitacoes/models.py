@@ -1,10 +1,8 @@
 from django.db import models
 
-from django.db import models
-
+from locais.models import Local
 from users.models import Cliente, Funcionario
 from veiculo.models import Veiculo
-from locais.models import Local
 
 
 class Solicitacao(models.Model):
@@ -21,19 +19,16 @@ class Solicitacao(models.Model):
         on_delete=models.PROTECT,
         related_name='solicitacoes'
     )
-
     veiculo = models.ForeignKey(
         Veiculo,
         on_delete=models.PROTECT,
         related_name='solicitacoes'
     )
-
     local = models.ForeignKey(
         Local,
         on_delete=models.PROTECT,
         related_name='solicitacoes'
     )
-
     funcionario = models.ForeignKey(
         Funcionario,
         on_delete=models.SET_NULL,
@@ -41,7 +36,6 @@ class Solicitacao(models.Model):
         null=True,
         blank=True
     )
-
     data_solicitacao = models.DateField(auto_now_add=True)
     data_inicio_desejada = models.DateField()
     data_fim_desejada = models.DateField()
@@ -54,4 +48,4 @@ class Solicitacao(models.Model):
     observacao = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f'Solicitação #{self.id} - {self.cliente.nome}'
+        return f'Solicitacao #{self.id} - {self.cliente.nome}'
