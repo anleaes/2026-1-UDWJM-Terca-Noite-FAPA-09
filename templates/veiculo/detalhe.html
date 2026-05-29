@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Detalhe do Veículo
+{% endblock title %}
+
+{% block body %}
+
+<h1>{{ veiculo.marca }} {{ veiculo.modelo }}</h1>
+
+<p><strong>Placa:</strong> {{ veiculo.placa }}</p>
+<p><strong>RENAVAM:</strong> {{ veiculo.renavam }}</p>
+<p><strong>Marca:</strong> {{ veiculo.marca }}</p>
+<p><strong>Modelo:</strong> {{ veiculo.modelo }}</p>
+<p><strong>Ano de fabricação:</strong> {{ veiculo.ano_fabricacao }}</p>
+<p><strong>Ano modelo:</strong> {{ veiculo.ano_modelo }}</p>
+<p><strong>Cor:</strong> {{ veiculo.cor }}</p>
+<p><strong>Quilometragem:</strong> {{ veiculo.quilometragem }} km</p>
+<p><strong>Grupo:</strong> {{ veiculo.grupo.nome }}</p>
+<p><strong>Combustível:</strong> {{ veiculo.get_tipo_combustivel_display }}</p>
+<p><strong>Status:</strong> {{ veiculo.get_status_display }}</p>
+
+<p>
+    <a href="{% url 'veiculo_web:editar' veiculo.pk %}">Editar</a>
+    |
+    <a href="{% url 'veiculo_web:deletar' veiculo.pk %}">Deletar</a>
+    |
+    <a href="{% url 'veiculo_web:listar' %}">Voltar para listagem</a>
+</p>
+
+{% endblock body %}
