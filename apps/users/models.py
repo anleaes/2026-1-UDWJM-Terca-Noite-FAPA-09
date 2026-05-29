@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Pessoa(models.Model):
     status_escolhas = [
         ('ATIVO', 'Ativo'),
@@ -26,7 +27,7 @@ class Cliente(Pessoa):
     validade_cnh = models.DateField()
     data_cadastro = models.DateField(auto_now_add=True)
 
-    def _str_(self):
+    def __str__(self):
         return self.nome
 
 
@@ -35,5 +36,5 @@ class Funcionario(Pessoa):
     cargo = models.CharField(max_length=100)
     ativo = models.BooleanField(default=True)
 
-    def _str_(self):
+    def __str__(self):
         return self.nome

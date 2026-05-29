@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework import viewsets
 
-# Create your views here.
+from .models import Catalogo
+from .serializers import CatalogoSerializer
+
+
+class CatalogoViewSet(viewsets.ModelViewSet):
+    queryset = Catalogo.objects.select_related('veiculo').all()
+    serializer_class = CatalogoSerializer

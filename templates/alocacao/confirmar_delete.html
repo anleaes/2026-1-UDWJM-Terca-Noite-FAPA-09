@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Excluir Alocação
+{% endblock title %}
+
+{% block body %}
+
+<h1>Excluir Alocação</h1>
+
+<p>Tem certeza que deseja excluir a alocação #{{ alocacao.id }}?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmar exclusão</button>
+</form>
+
+<p>
+    <a href="{% url 'alocacao_web:lista' %}">Cancelar</a>
+</p>
+
+{% endblock body %}
