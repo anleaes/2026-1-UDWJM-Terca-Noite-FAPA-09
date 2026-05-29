@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Catálogo
+{% endblock title %}
+
+{% block body %}
+
+<h1>Catálogo</h1>
+
+<p>
+    <a href="{% url 'catalogo_web:criar' %}">Cadastrar novo item do catálogo</a>
+</p>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Veículo</th>
+            <th>Preço diária</th>
+            <th>Destaque</th>
+            <th>Ativo</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for catalogo in catalogos %}
+            <tr>
+                <td>{{ catalogo.veiculo }}</td>
+                <td>R$ {{ catalogo.preco_diaria }}</td>
+                <td>{{ catalogo.destaque }}</td>
+                <td>{{ catalogo.ativo }}</td>
+                <td>
+                    <a href="{% url 'catalogo_web:detalhe' catalogo.pk %}">Ver</a>
+                    |
+                    <a href="{% url 'catalogo_web:editar' catalogo.pk %}">Editar</a>
+                    |
+                    <a href="{% url 'catalogo_web:deletar' catalogo.pk %}">Deletar</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="5">Nenhum item cadastrado no catálogo.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock body %}
