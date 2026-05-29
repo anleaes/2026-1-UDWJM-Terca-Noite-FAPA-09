@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Detalhe do Catálogo
+{% endblock title %}
+
+{% block body %}
+
+<h1>Catálogo - {{ catalogo.veiculo }}</h1>
+
+<p><strong>Veículo:</strong> {{ catalogo.veiculo }}</p>
+<p><strong>Preço diária:</strong> R$ {{ catalogo.preco_diaria }}</p>
+<p><strong>Descrição comercial:</strong> {{ catalogo.descricao_comercial }}</p>
+<p><strong>Foto (URL):</strong> {{ catalogo.foto|default:"—" }}</p>
+<p><strong>Destaque:</strong> {{ catalogo.destaque }}</p>
+<p><strong>Ativo:</strong> {{ catalogo.ativo }}</p>
+
+{% if catalogo.foto %}
+    <p><img src="{{ catalogo.foto }}" alt="Foto" style="max-width: 300px;"></p>
+{% endif %}
+
+<p>
+    <a href="{% url 'catalogo_web:editar' catalogo.pk %}">Editar</a>
+    |
+    <a href="{% url 'catalogo_web:deletar' catalogo.pk %}">Deletar</a>
+    |
+    <a href="{% url 'catalogo_web:listar' %}">Voltar para listagem</a>
+</p>
+
+{% endblock body %}
