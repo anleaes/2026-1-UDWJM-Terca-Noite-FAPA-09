@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Detalhe da Solicitacao
+{% endblock title %}
+
+{% block body %}
+
+<h1>Solicitacao #{{ solicitacao.id }}</h1>
+
+<p><strong>Cliente:</strong> {{ solicitacao.cliente }}</p>
+<p><strong>Veiculo:</strong> {{ solicitacao.veiculo }}</p>
+<p><strong>Local:</strong> {{ solicitacao.local }}</p>
+<p><strong>Funcionario:</strong> {{ solicitacao.funcionario|default:"-" }}</p>
+<p><strong>Data da solicitacao:</strong> {{ solicitacao.data_solicitacao }}</p>
+<p><strong>Inicio desejado:</strong> {{ solicitacao.data_inicio_desejada }}</p>
+<p><strong>Fim desejado:</strong> {{ solicitacao.data_fim_desejada }}</p>
+<p><strong>Motivo:</strong> {{ solicitacao.motivo }}</p>
+<p><strong>Status:</strong> {{ solicitacao.status }}</p>
+<p><strong>Observacao:</strong> {{ solicitacao.observacao|default:"-" }}</p>
+
+<p>
+    <a href="{% url 'solicitacoes:editar' solicitacao.pk %}">Editar</a>
+    |
+    <a href="{% url 'solicitacoes:excluir' solicitacao.pk %}">Excluir</a>
+    |
+    <a href="{% url 'solicitacoes:lista' %}">Voltar</a>
+</p>
+
+{% endblock body %}
