@@ -10,6 +10,7 @@ from .serializers import AlocacaoSerializer, HistoricoAlocacaoSerializer
 from .services import cancelar_alocacao, criar_alocacao, finalizar_alocacao
 
 from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .forms import AlocacaoForm
 
@@ -89,6 +90,12 @@ class AlocacaoListView(ListView):
     model = Alocacao
     template_name = 'alocacao/lista.html'
     context_object_name = 'alocacoes'
+    queryset = Alocacao.objects.select_related(
+        'solicitacao',
+        'solicitacao__cliente',
+        'solicitacao__veiculo',
+        'solicitacao__local'
+    ).all().order_by('-data_inicio')
 
 class AlocacaoDetailView(DetailView):
     model = Alocacao
@@ -102,6 +109,22 @@ class AlocacaoCreateView(CreateView):
     template_name = 'alocacao/form.html'
     success_url = reverse_lazy('alocacao_web:lista')
 
+    def form_valid(self, form):
+        try:
+            criar_alocacao(
+                solicitacao=form.cleaned_data['solicitacao'],
+                data_inicio=form.cleaned_data['data_inicio'],
+                data_fim_prevista=form.cleaned_data['data_fim_prevista'],
+                km_inicial=form.cleaned_data['km_inicial'],
+                observacao=form.cleaned_data.get('observacao'),
+                responsavel_alteracao='Tela web'
+            )
+        except DjangoValidationError as error:
+            form.add_error(None, error)
+            return self.form_invalid(form)
+
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class AlocacaoUpdateView(UpdateView):
     model = Alocacao
@@ -113,6 +136,7 @@ class AlocacaoUpdateView(UpdateView):
 class AlocacaoDeleteView(DeleteView):
     model = Alocacao
     template_name = 'alocacao/confirmar_delete.html'
+    context_object_name = 'alocacao'
     success_url = reverse_lazy('alocacao_web:lista')
 
 
@@ -120,3 +144,4 @@ class HistoricoAlocacaoListView(ListView):
     model = HistoricoAlocacao
     template_name = 'alocacao/historicos.html'
     context_object_name = 'historicos'
+    queryset = HistoricoAlocacao.objects.select_related('alocacao').all().order_by('-data_registro')
