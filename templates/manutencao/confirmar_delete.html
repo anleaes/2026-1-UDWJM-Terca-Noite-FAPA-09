@@ -8,12 +8,16 @@ Excluir Manutencao
 
 <h1>Excluir Manutencao</h1>
 
-<p>Tem certeza que deseja excluir a manutencao #{{ manutencao.id }}?</p>
+{% if erro %}
+    <p>{{ erro }}</p>
+{% else %}
+    <p>Tem certeza que deseja excluir a manutencao #{{ manutencao.id }}?</p>
 
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Confirmar exclusao</button>
-</form>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirmar exclusao</button>
+    </form>
+{% endif %}
 
 <p>
     <a href="{% url 'manutencao_web:lista' %}">Cancelar</a>

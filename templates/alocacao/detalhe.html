@@ -18,14 +18,15 @@ Detalhe da Alocação
 <p><strong>Observação:</strong> {{ alocacao.observacao }}</p>
 
 <p>
-    <a href="{% url 'alocacao_web:editar' alocacao.pk %}">Editar</a>
-    |
-    <a href="{% url 'alocacao_web:excluir' alocacao.pk %}">Excluir</a>
-    |
     {% if alocacao.status == 'ativa' %}
         <a href="{% url 'alocacao_web:finalizar' alocacao.pk %}">Finalizar</a>
         |
         <a href="{% url 'alocacao_web:cancelar' alocacao.pk %}">Cancelar</a>
+        |
+    {% else %}
+        <a href="{% url 'alocacao_web:editar' alocacao.pk %}">Editar</a>
+        |
+        <a href="{% url 'alocacao_web:excluir' alocacao.pk %}">Excluir</a>
         |
     {% endif %}
     <a href="{% url 'alocacao_web:lista' %}">Voltar</a>
