@@ -67,3 +67,21 @@ def finalizar_manutencao(manutencao, data_saida, custo=None):
     veiculo.save(update_fields=['status'])
 
     return manutencao
+
+
+@transaction.atomic
+def cancelar_manutencao(manutencao):
+    if manutencao.status == 'CONCLUIDA':
+        raise ValidationError('Manutencoes concluidas nao podem ser canceladas.')
+
+    if manutencao.status == 'CANCELADA':
+        raise ValidationError('Esta manutencao ja esta cancelada.')
+
+    manutencao.status = 'CANCELADA'
+    manutencao.save(update_fields=['status'])
+
+    veiculo = manutencao.veiculo
+    veiculo.status = 'disponivel'
+    veiculo.save(update_fields=['status'])
+
+    return manutencao

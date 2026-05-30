@@ -31,6 +31,11 @@ class PecaSerializer(serializers.ModelSerializer):
             'preco_unitario',
         ]
 
+    def validate_preco_unitario(self, value):
+        if value < 0:
+            raise serializers.ValidationError('O preco unitario nao pode ser negativo.')
+        return value
+
 
 class PecaManutencaoSerializer(serializers.ModelSerializer):
     manutencao_descricao = serializers.StringRelatedField(source='manutencao', read_only=True)
