@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Manutencoes
+{% endblock title %}
+
+{% block body %}
+
+<h1>Manutencoes</h1>
+
+<p>
+    <a href="{% url 'manutencao_web:criar' %}">Cadastrar nova manutencao</a>
+</p>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Veiculo</th>
+            <th>Tipo</th>
+            <th>Entrada</th>
+            <th>Saida</th>
+            <th>Custo</th>
+            <th>Status</th>
+            <th>Acoes</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for manutencao in manutencoes %}
+            <tr>
+                <td>{{ manutencao.id }}</td>
+                <td>{{ manutencao.veiculo }}</td>
+                <td>{{ manutencao.tipo_manutencao }}</td>
+                <td>{{ manutencao.data_entrada }}</td>
+                <td>{{ manutencao.data_saida|default:"-" }}</td>
+                <td>{{ manutencao.custo }}</td>
+                <td>{{ manutencao.status }}</td>
+                <td>
+                    <a href="{% url 'manutencao_web:detalhe' manutencao.pk %}">Ver</a>
+                    |
+                    <a href="{% url 'manutencao_web:editar' manutencao.pk %}">Editar</a>
+                    |
+                    <a href="{% url 'manutencao_web:deletar' manutencao.pk %}">Deletar</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="8">Nenhuma manutencao cadastrada.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock body %}

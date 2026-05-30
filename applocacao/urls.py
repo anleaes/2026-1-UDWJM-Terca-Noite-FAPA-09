@@ -12,6 +12,7 @@ urlpatterns = [
     path('locais/', include('locais.urls', namespace='locais')),
     path('solicitacoes/', include('solicitacoes.urls', namespace='solicitacoes')),
     path('alocacoes/', include('alocacao.urls_web', namespace='alocacao_web')),
+    path('manutencoes/', include('manutencao.urls_web', namespace='manutencao_web')),
     path('grupos/', include('grupo_veiculo.urls_web', namespace='grupo_veiculo_web')),  # ← novo
     path('veiculos/', include('veiculo.urls_web', namespace='veiculo_web')),            # ← novo
     path('catalogo/', include('catalogo.urls_web', namespace='catalogo_web')),          # ← novo

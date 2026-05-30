@@ -1,12 +1,16 @@
 from decimal import Decimal, InvalidOperation
 
 from django.core.exceptions import ValidationError as DjangoValidationError
+from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
 from django.utils.dateparse import parse_date
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
+from .forms import ManutencaoForm
 from .models import Manutencao, Peca, PecaManutencao
 from .serializers import ManutencaoSerializer, PecaManutencaoSerializer, PecaSerializer
 from .services import abrir_manutencao, finalizar_manutencao
@@ -75,3 +79,52 @@ class PecaManutencaoViewSet(viewsets.ModelViewSet):
         'peca'
     ).all()
     serializer_class = PecaManutencaoSerializer
+
+
+class ManutencaoListView(ListView):
+    model = Manutencao
+    template_name = 'manutencao/lista.html'
+    context_object_name = 'manutencoes'
+    queryset = Manutencao.objects.select_related('veiculo').all().order_by('-data_entrada')
+
+
+class ManutencaoDetailView(DetailView):
+    model = Manutencao
+    template_name = 'manutencao/detalhe.html'
+    context_object_name = 'manutencao'
+
+
+class ManutencaoCreateView(CreateView):
+    model = Manutencao
+    form_class = ManutencaoForm
+    template_name = 'manutencao/form.html'
+    success_url = reverse_lazy('manutencao_web:lista')
+
+    def form_valid(self, form):
+        try:
+            abrir_manutencao(
+                veiculo=form.cleaned_data['veiculo'],
+                tipo_manutencao=form.cleaned_data['tipo_manutencao'],
+                descricao=form.cleaned_data['descricao'],
+                data_entrada=form.cleaned_data['data_entrada'],
+                custo=form.cleaned_data['custo']
+            )
+        except DjangoValidationError as error:
+            form.add_error(None, error)
+            return self.form_invalid(form)
+
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class ManutencaoUpdateView(UpdateView):
+    model = Manutencao
+    form_class = ManutencaoForm
+    template_name = 'manutencao/form.html'
+    success_url = reverse_lazy('manutencao_web:lista')
+
+
+class ManutencaoDeleteView(DeleteView):
+    model = Manutencao
+    template_name = 'manutencao/confirmar_delete.html'
+    context_object_name = 'manutencao'
+    success_url = reverse_lazy('manutencao_web:lista')
