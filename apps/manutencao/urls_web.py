@@ -1,6 +1,7 @@
 from django.urls import path
 
 from .views import (
+    ManutencaoCancelarView,
     ManutencaoCreateView,
     ManutencaoDeleteView,
     ManutencaoDetailView,
@@ -33,6 +34,7 @@ urlpatterns = [
     path('<int:pk>/excluir/', ManutencaoDeleteView.as_view(), name='excluir'),
     path('<int:pk>/deletar/', ManutencaoDeleteView.as_view(), name='deletar'),
     path('<int:pk>/finalizar/', ManutencaoFinalizarView.as_view(), name='finalizar'),
+    path('<int:pk>/cancelar/', ManutencaoCancelarView.as_view(), name='cancelar'),
     path('pecas/', PecaListView.as_view(), name='pecas_lista'),
     path('pecas/listar/', PecaListView.as_view(), name='pecas_listar'),
     path('pecas/novo/', PecaCreateView.as_view(), name='pecas_novo'),

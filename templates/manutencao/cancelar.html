@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Cancelar Manutencao
+{% endblock title %}
+
+{% block body %}
+
+<h1>Cancelar Manutencao #{{ manutencao.id }}</h1>
+
+<p><strong>Veiculo:</strong> {{ manutencao.veiculo }}</p>
+<p><strong>Tipo:</strong> {{ manutencao.tipo_manutencao }}</p>
+<p><strong>Data de entrada:</strong> {{ manutencao.data_entrada }}</p>
+
+{% if erro %}
+    <p>{{ erro }}</p>
+{% else %}
+    <p>Tem certeza que deseja cancelar esta manutencao?</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Cancelar manutencao</button>
+    </form>
+{% endif %}
+
+<p>
+    <a href="{% url 'manutencao_web:detalhe' manutencao.pk %}">Voltar</a>
+</p>
+
+{% endblock body %}

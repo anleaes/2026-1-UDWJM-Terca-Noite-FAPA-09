@@ -42,6 +42,12 @@ class PecaForm(forms.ModelForm):
             'preco_unitario',
         ]
 
+    def clean_preco_unitario(self):
+        preco_unitario = self.cleaned_data['preco_unitario']
+        if preco_unitario < 0:
+            raise forms.ValidationError('O preco unitario nao pode ser negativo.')
+        return preco_unitario
+
 
 class PecaManutencaoForm(forms.ModelForm):
     class Meta:

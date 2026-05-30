@@ -15,7 +15,7 @@ from rest_framework.response import Response
 from .forms import ManutencaoFinalizarForm, ManutencaoForm, PecaForm, PecaManutencaoForm
 from .models import Manutencao, Peca, PecaManutencao
 from .serializers import ManutencaoSerializer, PecaManutencaoSerializer, PecaSerializer
-from .services import abrir_manutencao, finalizar_manutencao
+from .services import abrir_manutencao, cancelar_manutencao, finalizar_manutencao
 
 
 def _raise_api_validation_error(error):
@@ -30,7 +30,7 @@ class ManutencaoViewSet(viewsets.ModelViewSet):
     def perform_update(self, serializer):
         if serializer.instance.status in ('ABERTA', 'EM_ANDAMENTO'):
             raise ValidationError({
-                'detail': 'Manutencoes abertas devem ser finalizadas pelo fluxo oficial.'
+                'detail': 'Manutencoes abertas devem ser finalizadas ou canceladas pelo fluxo oficial.'
             })
         serializer.save()
 
@@ -76,10 +76,20 @@ class ManutencaoViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(manutencao)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    @action(detail=True, methods=['post'])
+    def cancelar(self, request, pk=None):
+        try:
+            manutencao = cancelar_manutencao(self.get_object())
+        except DjangoValidationError as error:
+            _raise_api_validation_error(error)
+
+        serializer = self.get_serializer(manutencao)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
     def perform_destroy(self, instance):
         if instance.status in ('ABERTA', 'EM_ANDAMENTO'):
             raise ValidationError({
-                'detail': 'Manutencoes abertas devem ser finalizadas antes de excluir.'
+                'detail': 'Manutencoes abertas devem ser finalizadas ou canceladas antes de excluir.'
             })
         instance.delete()
 
@@ -154,7 +164,7 @@ class ManutencaoDeleteView(DeleteView):
     def form_valid(self, form):
         if self.object.status in ('ABERTA', 'EM_ANDAMENTO'):
             context = self.get_context_data(object=self.object)
-            context['erro'] = 'Manutencoes abertas devem ser finalizadas antes de excluir.'
+            context['erro'] = 'Manutencoes abertas devem ser finalizadas ou canceladas antes de excluir.'
             return self.render_to_response(context)
         return super().form_valid(form)
 
@@ -189,6 +199,28 @@ class ManutencaoFinalizarView(View):
             'manutencao': manutencao,
             'form': form,
         })
+
+
+class ManutencaoCancelarView(View):
+    template_name = 'manutencao/cancelar.html'
+
+    def get(self, request, pk):
+        manutencao = get_object_or_404(Manutencao, pk=pk)
+        return render(request, self.template_name, {
+            'manutencao': manutencao,
+        })
+
+    def post(self, request, pk):
+        manutencao = get_object_or_404(Manutencao, pk=pk)
+
+        try:
+            cancelar_manutencao(manutencao)
+            return redirect('manutencao_web:detalhe', pk=manutencao.pk)
+        except DjangoValidationError as error:
+            return render(request, self.template_name, {
+                'manutencao': manutencao,
+                'erro': error,
+            })
 
 
 class PecaListView(ListView):
