@@ -1,5 +1,7 @@
 from django.core.exceptions import ValidationError as DjangoValidationError
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.dateparse import parse_date
+from django.views import View
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
@@ -12,7 +14,7 @@ from .services import cancelar_alocacao, criar_alocacao, finalizar_alocacao
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .forms import AlocacaoForm
+from .forms import AlocacaoCancelarForm, AlocacaoFinalizarForm, AlocacaoForm
 
 
 def _raise_api_validation_error(error):
@@ -138,6 +140,72 @@ class AlocacaoDeleteView(DeleteView):
     template_name = 'alocacao/confirmar_delete.html'
     context_object_name = 'alocacao'
     success_url = reverse_lazy('alocacao_web:lista')
+
+
+class AlocacaoFinalizarView(View):
+    template_name = 'alocacao/finalizar.html'
+
+    def get(self, request, pk):
+        alocacao = get_object_or_404(Alocacao, pk=pk)
+        form = AlocacaoFinalizarForm()
+        return render(request, self.template_name, {
+            'alocacao': alocacao,
+            'form': form,
+        })
+
+    def post(self, request, pk):
+        alocacao = get_object_or_404(Alocacao, pk=pk)
+        form = AlocacaoFinalizarForm(request.POST)
+
+        if form.is_valid():
+            try:
+                finalizar_alocacao(
+                    alocacao=alocacao,
+                    data_fim_real=form.cleaned_data['data_fim_real'],
+                    km_final=form.cleaned_data['km_final'],
+                    observacao=form.cleaned_data.get('observacao'),
+                    responsavel_alteracao='Tela web'
+                )
+                return redirect('alocacao_web:detalhe', pk=alocacao.pk)
+            except DjangoValidationError as error:
+                form.add_error(None, error)
+
+        return render(request, self.template_name, {
+            'alocacao': alocacao,
+            'form': form,
+        })
+
+
+class AlocacaoCancelarView(View):
+    template_name = 'alocacao/cancelar.html'
+
+    def get(self, request, pk):
+        alocacao = get_object_or_404(Alocacao, pk=pk)
+        form = AlocacaoCancelarForm()
+        return render(request, self.template_name, {
+            'alocacao': alocacao,
+            'form': form,
+        })
+
+    def post(self, request, pk):
+        alocacao = get_object_or_404(Alocacao, pk=pk)
+        form = AlocacaoCancelarForm(request.POST)
+
+        if form.is_valid():
+            try:
+                cancelar_alocacao(
+                    alocacao=alocacao,
+                    observacao=form.cleaned_data.get('observacao'),
+                    responsavel_alteracao='Tela web'
+                )
+                return redirect('alocacao_web:detalhe', pk=alocacao.pk)
+            except DjangoValidationError as error:
+                form.add_error(None, error)
+
+        return render(request, self.template_name, {
+            'alocacao': alocacao,
+            'form': form,
+        })
 
 
 class HistoricoAlocacaoListView(ListView):

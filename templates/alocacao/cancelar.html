@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Cancelar Alocacao
+{% endblock title %}
+
+{% block body %}
+
+<h1>Cancelar Alocacao #{{ alocacao.id }}</h1>
+
+<p>Tem certeza que deseja cancelar esta alocacao?</p>
+<p><strong>Solicitacao:</strong> {{ alocacao.solicitacao }}</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Cancelar alocacao</button>
+</form>
+
+<p>
+    <a href="{% url 'alocacao_web:detalhe' alocacao.pk %}">Voltar</a>
+</p>
+
+{% endblock body %}

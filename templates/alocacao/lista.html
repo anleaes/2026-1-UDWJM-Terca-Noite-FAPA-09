@@ -46,6 +46,12 @@ Alocações
                     <a href="{% url 'alocacao_web:editar' alocacao.pk %}">Editar</a>
                     |
                     <a href="{% url 'alocacao_web:deletar' alocacao.pk %}">Deletar</a>
+                    {% if alocacao.status == 'ativa' %}
+                        |
+                        <a href="{% url 'alocacao_web:finalizar' alocacao.pk %}">Finalizar</a>
+                        |
+                        <a href="{% url 'alocacao_web:cancelar' alocacao.pk %}">Cancelar</a>
+                    {% endif %}
                 </td>
             </tr>
         {% empty %}

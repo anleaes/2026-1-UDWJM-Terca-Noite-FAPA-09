@@ -42,6 +42,10 @@ Manutencoes
                     <a href="{% url 'manutencao_web:editar' manutencao.pk %}">Editar</a>
                     |
                     <a href="{% url 'manutencao_web:deletar' manutencao.pk %}">Deletar</a>
+                    {% if manutencao.status != 'CONCLUIDA' and manutencao.status != 'CANCELADA' %}
+                        |
+                        <a href="{% url 'manutencao_web:finalizar' manutencao.pk %}">Finalizar</a>
+                    {% endif %}
                 </td>
             </tr>
         {% empty %}

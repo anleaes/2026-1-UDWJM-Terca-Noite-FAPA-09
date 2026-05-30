@@ -2,15 +2,17 @@ from decimal import Decimal, InvalidOperation
 
 from django.core.exceptions import ValidationError as DjangoValidationError
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.utils.dateparse import parse_date
+from django.views import View
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
-from .forms import ManutencaoForm, PecaForm, PecaManutencaoForm
+from .forms import ManutencaoFinalizarForm, ManutencaoForm, PecaForm, PecaManutencaoForm
 from .models import Manutencao, Peca, PecaManutencao
 from .serializers import ManutencaoSerializer, PecaManutencaoSerializer, PecaSerializer
 from .services import abrir_manutencao, finalizar_manutencao
@@ -128,6 +130,38 @@ class ManutencaoDeleteView(DeleteView):
     template_name = 'manutencao/confirmar_delete.html'
     context_object_name = 'manutencao'
     success_url = reverse_lazy('manutencao_web:lista')
+
+
+class ManutencaoFinalizarView(View):
+    template_name = 'manutencao/finalizar.html'
+
+    def get(self, request, pk):
+        manutencao = get_object_or_404(Manutencao, pk=pk)
+        form = ManutencaoFinalizarForm(initial={'custo': manutencao.custo})
+        return render(request, self.template_name, {
+            'manutencao': manutencao,
+            'form': form,
+        })
+
+    def post(self, request, pk):
+        manutencao = get_object_or_404(Manutencao, pk=pk)
+        form = ManutencaoFinalizarForm(request.POST)
+
+        if form.is_valid():
+            try:
+                finalizar_manutencao(
+                    manutencao=manutencao,
+                    data_saida=form.cleaned_data['data_saida'],
+                    custo=form.cleaned_data.get('custo')
+                )
+                return redirect('manutencao_web:detalhe', pk=manutencao.pk)
+            except DjangoValidationError as error:
+                form.add_error(None, error)
+
+        return render(request, self.template_name, {
+            'manutencao': manutencao,
+            'form': form,
+        })
 
 
 class PecaListView(ListView):
