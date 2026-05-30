@@ -3,6 +3,20 @@ from django import forms
 from .models import Manutencao, Peca, PecaManutencao
 
 
+class ManutencaoFinalizarForm(forms.Form):
+    data_saida = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        label='Data de saida'
+    )
+    custo = forms.DecimalField(
+        required=False,
+        max_digits=10,
+        decimal_places=2,
+        min_value=0,
+        label='Custo final'
+    )
+
+
 class ManutencaoForm(forms.ModelForm):
     class Meta:
         model = Manutencao

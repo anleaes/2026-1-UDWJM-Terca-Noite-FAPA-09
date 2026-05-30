@@ -6,6 +6,8 @@ from .views import (
     AlocacaoCreateView,
     AlocacaoUpdateView,
     AlocacaoDeleteView,
+    AlocacaoCancelarView,
+    AlocacaoFinalizarView,
     HistoricoAlocacaoListView,
 )
 
@@ -22,6 +24,8 @@ urlpatterns = [
     path('<int:pk>/editar/', AlocacaoUpdateView.as_view(), name='editar'),
     path('<int:pk>/excluir/', AlocacaoDeleteView.as_view(), name='excluir'),
     path('<int:pk>/deletar/', AlocacaoDeleteView.as_view(), name='deletar'),
+    path('<int:pk>/finalizar/', AlocacaoFinalizarView.as_view(), name='finalizar'),
+    path('<int:pk>/cancelar/', AlocacaoCancelarView.as_view(), name='cancelar'),
 
     path('historicos/', HistoricoAlocacaoListView.as_view(), name='historicos'),
 ]

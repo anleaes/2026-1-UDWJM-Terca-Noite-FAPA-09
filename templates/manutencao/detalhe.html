@@ -21,6 +21,10 @@ Detalhe da Manutencao
     |
     <a href="{% url 'manutencao_web:excluir' manutencao.pk %}">Excluir</a>
     |
+    {% if manutencao.status != 'CONCLUIDA' and manutencao.status != 'CANCELADA' %}
+        <a href="{% url 'manutencao_web:finalizar' manutencao.pk %}">Finalizar</a>
+        |
+    {% endif %}
     <a href="{% url 'manutencao_web:lista' %}">Voltar</a>
 </p>
 
