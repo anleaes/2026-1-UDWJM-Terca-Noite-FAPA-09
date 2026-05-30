@@ -17,3 +17,8 @@ class SolicitacaoForm(forms.ModelForm):
             'status',
             'observacao',
         ]
+        widgets = {
+            'data_inicio_desejada': forms.DateInput(attrs={'type': 'date'}),
+            'data_fim_desejada': forms.DateInput(attrs={'type': 'date'}),
+            'observacao': forms.Textarea(attrs={'rows': 4}),
+        }

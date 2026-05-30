@@ -13,6 +13,12 @@ class SolicitacaoListView(ListView):
     model = Solicitacao
     template_name = 'solicitacoes/lista.html'
     context_object_name = 'solicitacoes'
+    queryset = Solicitacao.objects.select_related(
+        'cliente',
+        'veiculo',
+        'local',
+        'funcionario'
+    ).all().order_by('-data_solicitacao')
 
 
 class SolicitacaoDetailView(DetailView):
@@ -38,9 +44,15 @@ class SolicitacaoUpdateView(UpdateView):
 class SolicitacaoDeleteView(DeleteView):
     model = Solicitacao
     template_name = 'solicitacoes/confirmar_delete.html'
+    context_object_name = 'solicitacao'
     success_url = reverse_lazy('solicitacoes:lista')
 
 
 class SolicitacaoViewSet(viewsets.ModelViewSet):
-    queryset = Solicitacao.objects.all()
+    queryset = Solicitacao.objects.select_related(
+        'cliente',
+        'veiculo',
+        'local',
+        'funcionario'
+    ).all()
     serializer_class = SolicitacaoSerializer

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Solicitacoes
+{% endblock title %}
+
+{% block body %}
+
+<h1>Solicitacoes</h1>
+
+<p>
+    <a href="{% url 'solicitacoes:criar' %}" class="btn">Cadastrar nova solicitacao</a>
+</p>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Veiculo</th>
+            <th>Local</th>
+            <th>Inicio desejado</th>
+            <th>Fim desejado</th>
+            <th>Status</th>
+            <th>Acoes</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for solicitacao in solicitacoes %}
+            <tr>
+                <td>{{ solicitacao.id }}</td>
+                <td>{{ solicitacao.cliente }}</td>
+                <td>{{ solicitacao.veiculo }}</td>
+                <td>{{ solicitacao.local }}</td>
+                <td>{{ solicitacao.data_inicio_desejada }}</td>
+                <td>{{ solicitacao.data_fim_desejada }}</td>
+                <td>{{ solicitacao.status }}</td>
+                <td>
+                    <a href="{% url 'solicitacoes:detalhe' solicitacao.pk %}">Ver</a>
+                    |
+                    <a href="{% url 'solicitacoes:editar' solicitacao.pk %}">Editar</a>
+                    |
+                    <a href="{% url 'solicitacoes:excluir' solicitacao.pk %}">Excluir</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="8">Nenhuma solicitacao cadastrada.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock body %}

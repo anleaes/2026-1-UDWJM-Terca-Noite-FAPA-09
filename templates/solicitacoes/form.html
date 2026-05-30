@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Formulario de Solicitacao
+{% endblock title %}
+
+{% block body %}
+
+<h1>Formulario de Solicitacao</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit" class="btn">Salvar</button>
+    <a href="{% url 'solicitacoes:lista' %}" class="btn btn-secondary">Voltar</a>
+</form>
+
+{% endblock body %}

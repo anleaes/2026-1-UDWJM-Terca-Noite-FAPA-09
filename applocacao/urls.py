@@ -10,6 +10,7 @@ urlpatterns = [
     path('api/', include('core.urls_api', namespace='api')),
     path('usuarios/', include('users.urls_web', namespace='users_web')),
     path('locais/', include('locais.urls', namespace='locais')),
+    path('solicitacoes/', include('solicitacoes.urls', namespace='solicitacoes')),
     path('alocacoes/', include('alocacao.urls_web', namespace='alocacao_web')),
     path('grupos/', include('grupo_veiculo.urls_web', namespace='grupo_veiculo_web')),  # ← novo
     path('veiculos/', include('veiculo.urls_web', namespace='veiculo_web')),            # ← novo
