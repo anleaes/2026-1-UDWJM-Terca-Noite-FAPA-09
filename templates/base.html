@@ -213,18 +213,18 @@
                 </div>
 
                 <div class="dropdown">
-                    <a href="#">Alocação ▾</a>
+                    <a href="#">Locação ▾</a>
                     <div class="dropdown-content">
+                        <a href="{% url 'locais:lista' %}">Locais</a>
+                        <a href="{% url 'solicitacoes:lista' %}">Solicitações</a>
                         <a href="{% url 'alocacao_web:lista' %}">Alocações</a>
                         <a href="{% url 'alocacao_web:historicos' %}">Histórico</a>
-                        <a href="{% url 'solicitacoes:lista' %}">Solicitações</a>
                     </div>
                 </div>
 
                 <div class="dropdown">
-                    <a href="#">Operação ▾</a>
+                    <a href="#">Manutenção ▾</a>
                     <div class="dropdown-content">
-                        <a href="{% url 'locais:lista' %}">Locais</a>
                         <a href="{% url 'manutencao_web:lista' %}">Manutenções</a>
                         <a href="{% url 'manutencao_web:pecas_lista' %}">Peças</a>
                         <a href="{% url 'manutencao_web:pecas_manutencao_lista' %}">Peças em Manutenção</a>
