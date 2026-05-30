@@ -27,6 +27,13 @@ class ManutencaoViewSet(viewsets.ModelViewSet):
     queryset = Manutencao.objects.select_related('veiculo').all()
     serializer_class = ManutencaoSerializer
 
+    def perform_update(self, serializer):
+        if serializer.instance.status in ('ABERTA', 'EM_ANDAMENTO'):
+            raise ValidationError({
+                'detail': 'Manutencoes abertas devem ser finalizadas pelo fluxo oficial.'
+            })
+        serializer.save()
+
     def perform_create(self, serializer):
         dados = serializer.validated_data
         try:
@@ -68,6 +75,13 @@ class ManutencaoViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(manutencao)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def perform_destroy(self, instance):
+        if instance.status in ('ABERTA', 'EM_ANDAMENTO'):
+            raise ValidationError({
+                'detail': 'Manutencoes abertas devem ser finalizadas antes de excluir.'
+            })
+        instance.delete()
 
 
 class PecaViewSet(viewsets.ModelViewSet):
@@ -124,12 +138,25 @@ class ManutencaoUpdateView(UpdateView):
     template_name = 'manutencao/form.html'
     success_url = reverse_lazy('manutencao_web:lista')
 
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.status in ('ABERTA', 'EM_ANDAMENTO'):
+            return redirect('manutencao_web:detalhe', pk=self.object.pk)
+        return super().dispatch(request, *args, **kwargs)
+
 
 class ManutencaoDeleteView(DeleteView):
     model = Manutencao
     template_name = 'manutencao/confirmar_delete.html'
     context_object_name = 'manutencao'
     success_url = reverse_lazy('manutencao_web:lista')
+
+    def form_valid(self, form):
+        if self.object.status in ('ABERTA', 'EM_ANDAMENTO'):
+            context = self.get_context_data(object=self.object)
+            context['erro'] = 'Manutencoes abertas devem ser finalizadas antes de excluir.'
+            return self.render_to_response(context)
+        return super().form_valid(form)
 
 
 class ManutencaoFinalizarView(View):

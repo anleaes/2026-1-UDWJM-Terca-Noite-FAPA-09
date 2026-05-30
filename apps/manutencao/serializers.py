@@ -48,3 +48,28 @@ class PecaManutencaoSerializer(serializers.ModelSerializer):
             'preco_unitario',
             'sub_total',
         ]
+        read_only_fields = [
+            'sub_total',
+        ]
+
+    def validate_quantidade(self, value):
+        if value <= 0:
+            raise serializers.ValidationError('A quantidade deve ser maior que zero.')
+        return value
+
+    def validate_preco_unitario(self, value):
+        if value < 0:
+            raise serializers.ValidationError('O preco unitario nao pode ser negativo.')
+        return value
+
+    def create(self, validated_data):
+        validated_data['sub_total'] = (
+            validated_data['quantidade'] * validated_data['preco_unitario']
+        )
+        return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        instance = super().update(instance, validated_data)
+        instance.sub_total = instance.quantidade * instance.preco_unitario
+        instance.save(update_fields=['sub_total'])
+        return instance

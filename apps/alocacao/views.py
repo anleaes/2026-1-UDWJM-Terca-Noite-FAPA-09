@@ -26,6 +26,13 @@ class AlocacaoViewSet(viewsets.ModelViewSet):
     queryset = Alocacao.objects.select_related('solicitacao').all()
     serializer_class = AlocacaoSerializer
 
+    def perform_update(self, serializer):
+        if self.get_object().status == 'ativa':
+            raise ValidationError({
+                'detail': 'Alocacoes ativas devem ser finalizadas ou canceladas pelo fluxo oficial.'
+            })
+        serializer.save()
+
     def perform_create(self, serializer):
         dados = serializer.validated_data
         try:
@@ -67,6 +74,13 @@ class AlocacaoViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(alocacao)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def perform_destroy(self, instance):
+        if instance.status == 'ativa':
+            raise ValidationError({
+                'detail': 'Alocacoes ativas devem ser finalizadas ou canceladas antes de excluir.'
+            })
+        instance.delete()
 
     @action(detail=True, methods=['post'])
     def cancelar(self, request, pk=None):
@@ -134,12 +148,25 @@ class AlocacaoUpdateView(UpdateView):
     template_name = 'alocacao/form.html'
     success_url = reverse_lazy('alocacao_web:lista')
 
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.status == 'ativa':
+            return redirect('alocacao_web:detalhe', pk=self.object.pk)
+        return super().dispatch(request, *args, **kwargs)
+
 
 class AlocacaoDeleteView(DeleteView):
     model = Alocacao
     template_name = 'alocacao/confirmar_delete.html'
     context_object_name = 'alocacao'
     success_url = reverse_lazy('alocacao_web:lista')
+
+    def form_valid(self, form):
+        if self.object.status == 'ativa':
+            context = self.get_context_data(object=self.object)
+            context['erro'] = 'Alocacoes ativas devem ser finalizadas ou canceladas antes de excluir.'
+            return self.render_to_response(context)
+        return super().form_valid(form)
 
 
 class AlocacaoFinalizarView(View):
