@@ -9,17 +9,14 @@ class AlocacaoForm(forms.ModelForm):
             'solicitacao',
             'data_inicio',
             'data_fim_prevista',
-            'data_fim_real',
             'km_inicial',
-            'km_final',
-            'status',
             'observacao',
         ]
 
         widgets = {
             'data_inicio': forms.DateInput(attrs={'type': 'date'}),
             'data_fim_prevista': forms.DateInput(attrs={'type': 'date'}),
-            'data_fim_real': forms.DateInput(attrs={'type': 'date'}),
+            'observacao': forms.Textarea(attrs={'rows': 4}),
         }
 
 
