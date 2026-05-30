@@ -10,7 +10,7 @@ from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
-from .forms import ManutencaoForm
+from .forms import ManutencaoForm, PecaForm, PecaManutencaoForm
 from .models import Manutencao, Peca, PecaManutencao
 from .serializers import ManutencaoSerializer, PecaManutencaoSerializer, PecaSerializer
 from .services import abrir_manutencao, finalizar_manutencao
@@ -128,3 +128,74 @@ class ManutencaoDeleteView(DeleteView):
     template_name = 'manutencao/confirmar_delete.html'
     context_object_name = 'manutencao'
     success_url = reverse_lazy('manutencao_web:lista')
+
+
+class PecaListView(ListView):
+    model = Peca
+    template_name = 'manutencao/pecas_lista.html'
+    context_object_name = 'pecas'
+    queryset = Peca.objects.all().order_by('tipo_peca', 'fabricante')
+
+
+class PecaDetailView(DetailView):
+    model = Peca
+    template_name = 'manutencao/pecas_detalhe.html'
+    context_object_name = 'peca'
+
+
+class PecaCreateView(CreateView):
+    model = Peca
+    form_class = PecaForm
+    template_name = 'manutencao/pecas_form.html'
+    success_url = reverse_lazy('manutencao_web:pecas_lista')
+
+
+class PecaUpdateView(UpdateView):
+    model = Peca
+    form_class = PecaForm
+    template_name = 'manutencao/pecas_form.html'
+    success_url = reverse_lazy('manutencao_web:pecas_lista')
+
+
+class PecaDeleteView(DeleteView):
+    model = Peca
+    template_name = 'manutencao/pecas_confirmar_delete.html'
+    context_object_name = 'peca'
+    success_url = reverse_lazy('manutencao_web:pecas_lista')
+
+
+class PecaManutencaoListView(ListView):
+    model = PecaManutencao
+    template_name = 'manutencao/pecas_manutencao_lista.html'
+    context_object_name = 'pecas_manutencao'
+    queryset = PecaManutencao.objects.select_related(
+        'manutencao',
+        'peca'
+    ).all().order_by('-id')
+
+
+class PecaManutencaoDetailView(DetailView):
+    model = PecaManutencao
+    template_name = 'manutencao/pecas_manutencao_detalhe.html'
+    context_object_name = 'peca_manutencao'
+
+
+class PecaManutencaoCreateView(CreateView):
+    model = PecaManutencao
+    form_class = PecaManutencaoForm
+    template_name = 'manutencao/pecas_manutencao_form.html'
+    success_url = reverse_lazy('manutencao_web:pecas_manutencao_lista')
+
+
+class PecaManutencaoUpdateView(UpdateView):
+    model = PecaManutencao
+    form_class = PecaManutencaoForm
+    template_name = 'manutencao/pecas_manutencao_form.html'
+    success_url = reverse_lazy('manutencao_web:pecas_manutencao_lista')
+
+
+class PecaManutencaoDeleteView(DeleteView):
+    model = PecaManutencao
+    template_name = 'manutencao/pecas_manutencao_confirmar_delete.html'
+    context_object_name = 'peca_manutencao'
+    success_url = reverse_lazy('manutencao_web:pecas_manutencao_lista')

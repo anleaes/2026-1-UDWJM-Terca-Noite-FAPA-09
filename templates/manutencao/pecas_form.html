@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Formulario de Peca
+{% endblock title %}
+
+{% block body %}
+
+<h1>Formulario de Peca</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Salvar</button>
+</form>
+
+<p>
+    <a href="{% url 'manutencao_web:pecas_lista' %}">Voltar</a>
+</p>
+
+{% endblock body %}

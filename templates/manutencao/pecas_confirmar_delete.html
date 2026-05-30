@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Excluir Peca
+{% endblock title %}
+
+{% block body %}
+
+<h1>Excluir Peca</h1>
+
+<p>Tem certeza que deseja excluir a peca #{{ peca.id }}?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmar exclusao</button>
+</form>
+
+<p>
+    <a href="{% url 'manutencao_web:pecas_lista' %}">Cancelar</a>
+</p>
+
+{% endblock body %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Detalhe da Peca
+{% endblock title %}
+
+{% block body %}
+
+<h1>Peca #{{ peca.id }}</h1>
+
+<p><strong>Tipo:</strong> {{ peca.tipo_peca }}</p>
+<p><strong>Fabricante:</strong> {{ peca.fabricante }}</p>
+<p><strong>Preco unitario:</strong> {{ peca.preco_unitario }}</p>
+
+<p>
+    <a href="{% url 'manutencao_web:pecas_editar' peca.pk %}">Editar</a>
+    |
+    <a href="{% url 'manutencao_web:pecas_deletar' peca.pk %}">Deletar</a>
+    |
+    <a href="{% url 'manutencao_web:pecas_lista' %}">Voltar</a>
+</p>
+
+{% endblock body %}

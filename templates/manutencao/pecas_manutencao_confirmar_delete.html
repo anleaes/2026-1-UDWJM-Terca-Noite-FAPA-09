@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Excluir Peca em Manutencao
+{% endblock title %}
+
+{% block body %}
+
+<h1>Excluir Peca em Manutencao</h1>
+
+<p>Tem certeza que deseja remover esta peca da manutencao?</p>
+<p>{{ peca_manutencao }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmar exclusao</button>
+</form>
+
+<p>
+    <a href="{% url 'manutencao_web:pecas_manutencao_lista' %}">Cancelar</a>
+</p>
+
+{% endblock body %}
