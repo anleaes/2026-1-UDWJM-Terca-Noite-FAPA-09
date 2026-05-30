@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Pecas em Manutencao
+Peças em Manutenção
 {% endblock title %}
 
 {% block body %}
 
-<h1>Pecas em Manutencao</h1>
+<h1>Peças em Manutenção</h1>
 
 <p>
-    <a href="{% url 'manutencao_web:pecas_manutencao_criar' %}">Adicionar peca em manutencao</a>
+    <a href="{% url 'manutencao_web:pecas_manutencao_criar' %}">Adicionar peça usada na manutenção</a>
     |
-    <a href="{% url 'manutencao_web:pecas_lista' %}">Ver pecas</a>
+    <a href="{% url 'manutencao_web:pecas_lista' %}">Ver peças cadastradas</a>
 </p>
 
 <table border="1">
@@ -46,7 +46,7 @@ Pecas em Manutencao
             </tr>
         {% empty %}
             <tr>
-                <td colspan="7">Nenhuma peca vinculada a manutencao.</td>
+                <td colspan="7">Nenhuma peça vinculada a uma manutenção.</td>
             </tr>
         {% endfor %}
     </tbody>

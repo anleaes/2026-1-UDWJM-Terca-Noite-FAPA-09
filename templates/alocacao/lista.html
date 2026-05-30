@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Alocações
+Alocações Geradas
 {% endblock title %}
 
 {% block body %}
 
-<h1>Alocações</h1>
+<h1>Alocações Geradas</h1>
 
 <p>
-    <a href="{% url 'alocacao_web:criar' %}">Cadastrar nova alocação</a>
+    <a href="{% url 'alocacao_web:criar' %}">Gerar alocação de solicitação aprovada</a>
     |
-    <a href="{% url 'alocacao_web:historicos' %}">Ver históricos</a>
+    <a href="{% url 'alocacao_web:historicos' %}">Ver histórico</a>
 </p>
 
 <table border="1">
@@ -57,7 +57,7 @@ Alocações
             </tr>
         {% empty %}
             <tr>
-                <td colspan="9">Nenhuma alocação cadastrada.</td>
+                <td colspan="9">Nenhuma alocação gerada.</td>
             </tr>
         {% endfor %}
     </tbody>

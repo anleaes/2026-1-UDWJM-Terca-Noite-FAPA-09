@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Pecas
+Peças
 {% endblock title %}
 
 {% block body %}
 
-<h1>Pecas</h1>
+<h1>Peças</h1>
 
 <p>
-    <a href="{% url 'manutencao_web:pecas_criar' %}">Cadastrar nova peca</a>
+    <a href="{% url 'manutencao_web:pecas_criar' %}">Cadastrar peça</a>
     |
-    <a href="{% url 'manutencao_web:pecas_manutencao_lista' %}">Pecas em manutencao</a>
+    <a href="{% url 'manutencao_web:pecas_manutencao_lista' %}">Peças usadas em manutenção</a>
 </p>
 
 <table border="1">
@@ -20,7 +20,7 @@ Pecas
             <th>ID</th>
             <th>Tipo</th>
             <th>Fabricante</th>
-            <th>Preco unitario</th>
+            <th>Preço unitário</th>
             <th>Acoes</th>
         </tr>
     </thead>
@@ -42,7 +42,7 @@ Pecas
             </tr>
         {% empty %}
             <tr>
-                <td colspan="5">Nenhuma peca cadastrada.</td>
+                <td colspan="5">Nenhuma peça cadastrada.</td>
             </tr>
         {% endfor %}
     </tbody>

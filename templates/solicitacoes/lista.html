@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Solicitacoes
+Solicitações de Locação
 {% endblock title %}
 
 {% block body %}
 
-<h1>Solicitacoes</h1>
+<h1>Solicitações de Locação</h1>
 
 <p>
-    <a href="{% url 'solicitacoes:criar' %}" class="btn">Cadastrar nova solicitacao</a>
+    <a href="{% url 'solicitacoes:criar' %}" class="btn">Nova solicitação</a>
 </p>
 
 <table border="1">
@@ -46,7 +46,7 @@ Solicitacoes
             </tr>
         {% empty %}
             <tr>
-                <td colspan="8">Nenhuma solicitacao cadastrada.</td>
+                <td colspan="8">Nenhuma solicitação criada.</td>
             </tr>
         {% endfor %}
     </tbody>

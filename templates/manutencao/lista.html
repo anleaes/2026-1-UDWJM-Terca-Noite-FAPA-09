@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Manutencoes
+Manutenções
 {% endblock title %}
 
 {% block body %}
 
-<h1>Manutencoes</h1>
+<h1>Manutenções</h1>
 
 <p>
-    <a href="{% url 'manutencao_web:criar' %}">Cadastrar nova manutencao</a>
+    <a href="{% url 'manutencao_web:criar' %}">Abrir manutenção</a>
 </p>
 
 <table border="1">
@@ -53,7 +53,7 @@ Manutencoes
             </tr>
         {% empty %}
             <tr>
-                <td colspan="8">Nenhuma manutencao cadastrada.</td>
+                <td colspan="8">Nenhuma manutenção aberta.</td>
             </tr>
         {% endfor %}
     </tbody>
