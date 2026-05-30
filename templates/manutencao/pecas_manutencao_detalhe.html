@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Detalhe da Peca em Manutencao
+{% endblock title %}
+
+{% block body %}
+
+<h1>Peca em Manutencao #{{ peca_manutencao.id }}</h1>
+
+<p><strong>Manutencao:</strong> {{ peca_manutencao.manutencao }}</p>
+<p><strong>Peca:</strong> {{ peca_manutencao.peca }}</p>
+<p><strong>Quantidade:</strong> {{ peca_manutencao.quantidade }}</p>
+<p><strong>Preco unitario:</strong> {{ peca_manutencao.preco_unitario }}</p>
+<p><strong>Subtotal:</strong> {{ peca_manutencao.sub_total }}</p>
+
+<p>
+    <a href="{% url 'manutencao_web:pecas_manutencao_editar' peca_manutencao.pk %}">Editar</a>
+    |
+    <a href="{% url 'manutencao_web:pecas_manutencao_deletar' peca_manutencao.pk %}">Deletar</a>
+    |
+    <a href="{% url 'manutencao_web:pecas_manutencao_lista' %}">Voltar</a>
+</p>
+
+{% endblock body %}

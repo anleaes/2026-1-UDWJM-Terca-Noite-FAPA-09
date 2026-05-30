@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Pecas em Manutencao
+{% endblock title %}
+
+{% block body %}
+
+<h1>Pecas em Manutencao</h1>
+
+<p>
+    <a href="{% url 'manutencao_web:pecas_manutencao_criar' %}">Adicionar peca em manutencao</a>
+    |
+    <a href="{% url 'manutencao_web:pecas_lista' %}">Ver pecas</a>
+</p>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Manutencao</th>
+            <th>Peca</th>
+            <th>Quantidade</th>
+            <th>Preco unitario</th>
+            <th>Subtotal</th>
+            <th>Acoes</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for item in pecas_manutencao %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.manutencao }}</td>
+                <td>{{ item.peca }}</td>
+                <td>{{ item.quantidade }}</td>
+                <td>{{ item.preco_unitario }}</td>
+                <td>{{ item.sub_total }}</td>
+                <td>
+                    <a href="{% url 'manutencao_web:pecas_manutencao_detalhe' item.pk %}">Ver</a>
+                    |
+                    <a href="{% url 'manutencao_web:pecas_manutencao_editar' item.pk %}">Editar</a>
+                    |
+                    <a href="{% url 'manutencao_web:pecas_manutencao_deletar' item.pk %}">Deletar</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="7">Nenhuma peca vinculada a manutencao.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock body %}

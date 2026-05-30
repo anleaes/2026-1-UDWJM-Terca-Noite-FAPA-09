@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Manutencao
+from .models import Manutencao, Peca, PecaManutencao
 
 
 class ManutencaoForm(forms.ModelForm):
@@ -17,3 +17,47 @@ class ManutencaoForm(forms.ModelForm):
             'data_entrada': forms.DateInput(attrs={'type': 'date'}),
             'descricao': forms.Textarea(attrs={'rows': 4}),
         }
+
+
+class PecaForm(forms.ModelForm):
+    class Meta:
+        model = Peca
+        fields = [
+            'tipo_peca',
+            'fabricante',
+            'preco_unitario',
+        ]
+
+
+class PecaManutencaoForm(forms.ModelForm):
+    class Meta:
+        model = PecaManutencao
+        fields = [
+            'manutencao',
+            'peca',
+            'quantidade',
+            'preco_unitario',
+        ]
+
+    def clean_quantidade(self):
+        quantidade = self.cleaned_data['quantidade']
+        if quantidade <= 0:
+            raise forms.ValidationError('A quantidade deve ser maior que zero.')
+        return quantidade
+
+    def clean_preco_unitario(self):
+        preco_unitario = self.cleaned_data['preco_unitario']
+        if preco_unitario < 0:
+            raise forms.ValidationError('O preco unitario nao pode ser negativo.')
+        return preco_unitario
+
+    def save(self, commit=True):
+        peca_manutencao = super().save(commit=False)
+        peca_manutencao.sub_total = (
+            peca_manutencao.quantidade * peca_manutencao.preco_unitario
+        )
+
+        if commit:
+            peca_manutencao.save()
+
+        return peca_manutencao

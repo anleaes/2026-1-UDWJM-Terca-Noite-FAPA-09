@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Pecas
+{% endblock title %}
+
+{% block body %}
+
+<h1>Pecas</h1>
+
+<p>
+    <a href="{% url 'manutencao_web:pecas_criar' %}">Cadastrar nova peca</a>
+    |
+    <a href="{% url 'manutencao_web:pecas_manutencao_lista' %}">Pecas em manutencao</a>
+</p>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Fabricante</th>
+            <th>Preco unitario</th>
+            <th>Acoes</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for peca in pecas %}
+            <tr>
+                <td>{{ peca.id }}</td>
+                <td>{{ peca.tipo_peca }}</td>
+                <td>{{ peca.fabricante }}</td>
+                <td>{{ peca.preco_unitario }}</td>
+                <td>
+                    <a href="{% url 'manutencao_web:pecas_detalhe' peca.pk %}">Ver</a>
+                    |
+                    <a href="{% url 'manutencao_web:pecas_editar' peca.pk %}">Editar</a>
+                    |
+                    <a href="{% url 'manutencao_web:pecas_deletar' peca.pk %}">Deletar</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="5">Nenhuma peca cadastrada.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock body %}
